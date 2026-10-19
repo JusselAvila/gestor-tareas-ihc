@@ -13,21 +13,40 @@ function normalize(value: string) {
 }
 
 function TaskFilters() {
-  const [subjectQuery, setSubjectQuery] = useState('')
-  const [teacherQuery, setTeacherQuery] = useState('')
+  // 1. Cambiamos los dos estados separados por una sola barra de búsqueda global
+  const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState('')
 
+  // 2. Lógica de búsqueda inteligente (Primero Materia, si no hay coincidencia, busca por Docente)
   const filteredTasks = tasks.filter((task) => {
-    const matchesSubject = normalize(task.materia).includes(normalize(subjectQuery))
-    const matchesTeacher = normalize(task.docente).includes(normalize(teacherQuery))
+    const query = normalize(searchQuery)
+    
+    // Filtro por Estado (se mantiene independiente)
     const matchesStatus = statusFilter === '' || task.estado === statusFilter
 
-    return matchesSubject && matchesTeacher && matchesStatus
+    // Si no hay texto escrito en la barra, solo filtra por estado
+    if (!query) return matchesStatus
+
+    // Verificamos si existe alguna materia en toda la lista que coincida con lo que se escribió
+    const hasSubjectMatchInAnyTask = tasks.some((t) => 
+      normalize(t.materia).includes(query)
+    )
+
+    let matchesSearch = false
+
+    if (hasSubjectMatchInAnyTask) {
+      // Si la búsqueda coincide con alguna materia, filtramos estrictamente por materia
+      matchesSearch = normalize(task.materia).includes(query)
+    } else {
+      // Si no hay coincidencias por materia, buscamos por docente
+      matchesSearch = normalize(task.docente).includes(query)
+    }
+
+    return matchesSearch && matchesStatus
   })
 
   function clearFilters() {
-    setSubjectQuery('')
-    setTeacherQuery('')
+    setSearchQuery('')
     setStatusFilter('')
   }
 
@@ -37,29 +56,20 @@ function TaskFilters() {
         aria-label="Filtrar tareas"
         className="mb-6 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:mb-8 sm:p-5"
       >
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          {/* Única barra de búsqueda para Materia o Docente */}
           <label className="block min-w-0">
-            <span className="mb-1.5 block text-sm font-medium text-slate-700">Materia</span>
+            <span className="mb-1.5 block text-sm font-medium text-slate-700">Busqueda</span>
             <input
               type="search"
-              value={subjectQuery}
-              onChange={(event) => setSubjectQuery(event.target.value)}
-              placeholder="Buscar por materia..."
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              placeholder="Buscar por materia o docente..."
               className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
             />
           </label>
 
-          <label className="block min-w-0">
-            <span className="mb-1.5 block text-sm font-medium text-slate-700">Docente</span>
-            <input
-              type="search"
-              value={teacherQuery}
-              onChange={(event) => setTeacherQuery(event.target.value)}
-              placeholder="Buscar por docente..."
-              className="w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10"
-            />
-          </label>
-
+          {/* Filtro de Estado */}
           <label className="block min-w-0">
             <span className="mb-1.5 block text-sm font-medium text-slate-700">Estado</span>
             <select
@@ -85,7 +95,7 @@ function TaskFilters() {
         <button
           type="button"
           onClick={clearFilters}
-          disabled={!subjectQuery && !teacherQuery && !statusFilter}
+          disabled={!searchQuery && !statusFilter}
           className="rounded-lg px-3 py-2 text-sm font-semibold text-indigo-700 transition hover:bg-indigo-50 disabled:cursor-not-allowed disabled:text-slate-400 disabled:hover:bg-transparent"
         >
           Limpiar filtros
