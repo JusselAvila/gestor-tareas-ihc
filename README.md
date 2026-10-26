@@ -1,78 +1,82 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 📚 Gestor de Tareas - IHC
 
-Currently, two official plugins are available:
+Aplicación web desarrollada con **React**, **TypeScript** y **Vite** para la gestión y el control de tareas académicas, implementando buenas prácticas de Interacción Humano-Computador (IHC), validaciones estrictas de formularios y manejo de estados globales.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Características principales
 
-## React Compiler
+- **Formulario dinámico con estado unificado:** Control de múltiples campos mediante un objeto de estado centralizado y manejadores de eventos optimizados.
+- **Validaciones académicas:**
+  - Validación de campos obligatorios (materia y docente).
+  - Validación de longitud en la descripción de la tarea (mínimo 10 caracteres reales, excluyendo espacios en blanco).
+  - Restricción de fechas de entrega mediante un calendario dinámico que bloquea fechas pasadas.
+- **Gestión de estados globales:** Actualización de la lista de tareas en tiempo real utilizando el operador *spread* y comunicación entre componentes mediante *props*.
+- **Tipado estricto:** Desarrollado íntegramente en TypeScript para mejorar la robustez del código y reducir errores durante el desarrollo.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## 🛠️ Tecnologías utilizadas
 
-Note: This will impact Vite dev & build performances.
-You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
+- [React](https://react.dev/) (Componentes funcionales y Hooks como `useState`).
+- [TypeScript](https://www.typescriptlang.org/).
+- [Vite](https://vite.dev/).
+- [Tailwind CSS](https://tailwindcss.com/) (Estilos e interfaz de usuario).
 
-## Expanding the ESLint configuration
+## 🚀 Instalación y ejecución local
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Sigue estos pasos para clonar y ejecutar el proyecto en tu máquina local.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 1. Clonar el repositorio
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+git clone https://github.com/JusselAvila/gestor-tareas-ihc.git
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+### 2. Entrar al directorio del proyecto
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+cd gestor-tareas-ihc
 ```
+
+### 3. Instalar las dependencias
+
+```bash
+npm install
+```
+
+### 4. Ejecutar el servidor de desarrollo
+
+```bash
+npm run dev
+```
+
+Una vez iniciado el servidor, abre en tu navegador la URL que aparece en la terminal.
+
+## 📂 Estructura del proyecto
+
+La estructura puede variar según la organización actual del repositorio.
+
+```text
+gestor-tareas-ihc/
+├── public/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   ├── App.tsx
+│   ├── main.tsx
+│   └── index.css
+├── index.html
+├── package.json
+├── tsconfig.json
+├── vite.config.ts
+└── README.md
+```
+
+## 📖 Contexto académico
+
+Este proyecto forma parte del área de **Interacción Humano-Computador (IHC)** y tiene como objetivo aplicar principios de diseño de interfaces, validación de datos y gestión de estados en una aplicación web orientada a la organización de tareas académicas.
+
+## 👨‍💻 Autor
+
+**Jussel Ávila**
+
+Repositorio: [gestor-tareas-ihc](https://github.com/JusselAvila/gestor-tareas-ihc)
+
