@@ -11,6 +11,18 @@ const estadoStyles: Record<string, string> = {
   Finalizada: 'bg-emerald-50 text-emerald-700 ring-emerald-600/20',
 }
 
+// Función auxiliar para voltear de YYYY-MM-DD a DD/MM/YYYY
+function formatearFecha(fechaStr: string) {
+  if (!fechaStr) return 'Sin fecha'
+  // Si viene en formato YYYY-MM-DD, lo separamos
+  const partes = fechaStr.split('-')
+  if (partes.length === 3) {
+    const [año, mes, dia] = partes
+    return `${dia}/${mes}/${año}`
+  }
+  return fechaStr // Si ya tiene otro formato, lo devuelve tal cual
+}
+
 function TaskCard({ materia, docente, fecha, estado }: TaskCardProps) {
   return (
     <article className="flex min-h-52 flex-col rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-indigo-200 hover:shadow-md sm:p-6">
@@ -29,7 +41,7 @@ function TaskCard({ materia, docente, fecha, estado }: TaskCardProps) {
         </div>
         <div className="flex flex-wrap gap-x-2">
           <dt className="font-medium text-slate-500">Fecha de entrega</dt>
-          <dd className="text-slate-800">{fecha}</dd>
+          <dd className="text-slate-800">{formatearFecha(fecha)}</dd>
         </div>
       </dl>
     </article>

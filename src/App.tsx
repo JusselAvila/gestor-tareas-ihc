@@ -1,6 +1,21 @@
+import { useState } from 'react'
+import ActivityForm from './components/ActivityForm'
 import TaskFilters from './components/TaskFilters'
+import { tasks as initialTasks, type Task } from './data/tasks'
 
 function App() {
+  // ESTADO GLOBAL: Mantiene la lista viva de tareas usando TypeScript
+  const [tasks, setTasks] = useState<Task[]>(initialTasks)
+
+  // FUNCIÓN TRANSMISORA: Recibe los datos del formulario, les crea un ID único y los añade a la lista
+  const handleAddTask = (newTaskData: Omit<Task, 'id'>) => {
+    const newTask: Task = {
+      id: Date.now().toString(),
+      ...newTaskData,
+    }
+    setTasks([newTask, ...tasks])
+  }
+
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-8 text-slate-800 sm:px-6 sm:py-12 lg:px-8">
       <div className="mx-auto w-full max-w-6xl">
@@ -13,7 +28,11 @@ function App() {
             </div>
           </div>
 
-          <TaskFilters />
+          {/* CONEXIÓN: Se le pasa la función handleAddTask al formulario como prop */}
+          <ActivityForm onAddTask={handleAddTask} />
+
+          {/* LISTADO: Se le pasa el estado global tasks para renderizar las tarjetas */}
+          <TaskFilters tasks={tasks} />
         </section>
       </div>
     </main>

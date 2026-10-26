@@ -1,6 +1,10 @@
 import { useState } from 'react'
-import { tasks, type TaskStatus } from '../data/tasks'
+import { type Task, type TaskStatus } from '../data/tasks'
 import TaskCard from './TaskCard'
+
+interface TaskFiltersProps {
+  tasks: Task[]
+}
 
 const statuses: TaskStatus[] = ['Pendiente', 'En progreso', 'Finalizada']
 
@@ -12,33 +16,26 @@ function normalize(value: string) {
     .trim()
 }
 
-function TaskFilters() {
-  // 1. Cambiamos los dos estados separados por una sola barra de búsqueda global
+function TaskFilters({ tasks }: TaskFiltersProps) {
   const [searchQuery, setSearchQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState('')
 
-  // 2. Lógica de búsqueda inteligente (Primero Materia, si no hay coincidencia, busca por Docente)
   const filteredTasks = tasks.filter((task) => {
     const query = normalize(searchQuery)
-    
-    // Filtro por Estado (se mantiene independiente)
+
     const matchesStatus = statusFilter === '' || task.estado === statusFilter
 
-    // Si no hay texto escrito en la barra, solo filtra por estado
     if (!query) return matchesStatus
 
-    // Verificamos si existe alguna materia en toda la lista que coincida con lo que se escribió
-    const hasSubjectMatchInAnyTask = tasks.some((t) => 
+    const hasSubjectMatchInAnyTask = tasks.some((t) =>
       normalize(t.materia).includes(query)
     )
 
     let matchesSearch = false
 
     if (hasSubjectMatchInAnyTask) {
-      // Si la búsqueda coincide con alguna materia, filtramos estrictamente por materia
       matchesSearch = normalize(task.materia).includes(query)
     } else {
-      // Si no hay coincidencias por materia, buscamos por docente
       matchesSearch = normalize(task.docente).includes(query)
     }
 
@@ -105,7 +102,13 @@ function TaskFilters() {
       {filteredTasks.length > 0 ? (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3">
           {filteredTasks.map((task) => (
-            <TaskCard key={task.id} {...task} />
+            <TaskCard
+              key={task.id}
+              materia={task.materia}
+              docente={task.docente}
+              fecha={task.fecha}
+              estado={task.estado}
+            />
           ))}
         </div>
       ) : (
