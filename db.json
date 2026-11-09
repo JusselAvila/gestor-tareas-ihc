@@ -1,0 +1,45 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "nombre_materia": "IHCasdasd",
+      "docente": "Bryana Ojopi",
+      "tarea": "Realizar la correccion de la validacion de los estados del task",
+      "fecha": "02/10/2026",
+      "estado": "Completado"
+    },
+    {
+      "id": "3",
+      "nombre_materia": "Programacion Orientada a asdasdqwasdasd",
+      "docente": "María García",
+      "tarea": "Crear una funcion de busqueda binaria",
+      "fecha": "20/10/2026",
+      "estado": "Pendiente"
+    },
+    {
+      "id": "4",
+      "nombre_materia": "Interacción Humano Computador",
+      "docente": "Bryana Ojopi",
+      "tarea": "Realizar el avance de proyecto",
+      "fecha": "20/10/2026",
+      "estado": "En progreso"
+    },
+    {
+      "id": "5",
+      "nombre_materia": "Aplicaciones Moviles",
+      "docente": "Juan Pablo Villazon",
+      "tarea": "Corregir las funcionalidades de la app realizada en clases",
+      "fecha": "20/10/2026",
+      "estado": "En progreso"
+    },
+    {
+      "id": "MP-KNbmSzbE",
+      "nombre_materia": "jskldasj",
+      "docente": "aksjdlka",
+      "tarea": "akjdlkajsdkl",
+      "fecha": "2026-11-25",
+      "estado": "En proceso"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
